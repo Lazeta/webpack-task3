@@ -1,0 +1,20 @@
+<svg width="120" height="130" viewBox="0 0 120 130" xmlns="http://www.w30.org/2000/svg">
+    <rect x="5" y="15" width="110" height="100" rx="8" ry="8" fill="#ffffff" stroke="#333333" stroke-width="2"/>
+    
+    <rect x="5" y="5" width="110" height="10" rx="3" ry="3" fill="#333333"/>
+
+    <circle cx="15" cy="5" r="2" fill="#555555"/>
+    <circle cx="105" cy="5" r="2" fill="#555555"/>
+    
+    <text x="15" y="32" font-size="8" fill="#555">ПН</text>
+    <text x="35" y="32" font-size="8" fill="#555">ВТ</text>
+    <text x="55" y="32" font-size="8" fill="#555">СР</text>
+    <text x="75" y="32" font-size="8" fill="#555">ЧТ</text>
+    <text x="95" y="32" font-size="8" fill="#555">ПТ</text>
+    
+    <text x="15" y="48" font-size="10" font-weight="bold" fill="#333">1</text>
+    <text x="35" y="48" font-size="10" font-weight="bold" fill="#333">2</text>
+    <text x="55" y="48" font-size="10" font-weight="bold" fill="#333">3</text>
+    <text x="75" y="48" font-size="10" font-weight="bold" fill="#333">4</text>
+    <text x="95" y="48" font-size="10" font-weight="bold" fill="#333">5</text>
+</svg>
