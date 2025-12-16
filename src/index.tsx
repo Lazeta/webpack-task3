@@ -1,40 +1,48 @@
 import { createRoot } from "react-dom/client";
-import { App } from "./components/App";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { LazyAbout } from "@/pages/about/About.lazy";
-import { Shop } from "@/pages/shop";
-import { Suspense } from "react";
+import App from "./components/App";
+import { StrictMode } from "react";
+import { createTheme, ThemeProvider } from "@mui/material";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
 
 const root = document.getElementById("root");
 if (!root) {
-    throw new Error("Failed to find the root element");
+  throw new Error("Failed to find the root element");
 }
 
-const container = createRoot(root);
-
-const router = createBrowserRouter([
-    {   
-        path: "/", 
-        element: <App />, 
-        children: [
-            {
-                path: "/about",
-                element: 
-                    <Suspense fallback={<div>Loading About...</div>}>
-                        <LazyAbout />
-                    </Suspense>,
-            },
-            {
-                path: "/shop",
-                element: 
-                    <Suspense fallback={<div>Loading Shop...</div>}>
-                        <Shop />
-                    </Suspense>,
-            }
-        ]
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#008000",
     },
-]);
+    secondary: {
+      main: "#dc004e",
+    },
+  },
+  typography: {
+    h1: {
+      fontSize: "3rem",
+      fontWeight: 600,
+    },
+    h2: {
+      fontSize: "1.75rem",
+      fontWeight: 600,
+    },
+    h3: {
+      fontSize: "1.5rem",
+      fontWeight: 600,
+    },
+  },
+});
 
-container.render(
-    <RouterProvider router={router} />  
+const container = createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <BrowserRouter>
+      {/* <Provider store={store}> */}
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+      {/* </Provider> */}
+    </BrowserRouter>
+  </StrictMode>
 );

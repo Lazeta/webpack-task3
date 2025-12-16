@@ -1,57 +1,35 @@
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import { useState } from "react";
-import classes from './App.module.scss';
-import { Link, Outlet } from "react-router-dom";
-import About from "@/pages/about/About";
-import pngwing from '@/assets/pngwing.com.png';
-import glaza from '@/assets/glaza-zivotnyh-smotrat-krupnym-planom-nabludaa-za-prirodoi-s-generativnym-iskusstvennym-intellektom.jpg';
-import Art from '@/assets/art.svg';
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import "./App.module.scss";
+import Auth from "@/pages/authentication/Auth";
+import MainPage from "@/pages/mainPage/MainPage";
 
-function TODO(a: number) {
-    console.log('TODO');
-}
-
-
-
-
-export const App = () => {
-    const [count, setCount] = useState(0);
-
-    const increment = () => {
-        setCount(prev => prev + 1);
-    }
-    // TODO('5');
-
-    // if(__PLATFORM__ === 'desktop') {
-    //     return <div>ISDESKTOPPLATFORM</div>
-    // }
-    // if(__PLATFORM__ === 'mobile') {
-    //     return <div>ISMOBILEPLATFORM</div>
-    // }
-    // if(__ENV__ === 'development') {
-    //     console.log('Development mode');
-    // }
-
-    return (
-        <>
-        <div data-testid = {'App.DataTestId'}></div>
-        <div>
-            <h1 data-testid={"Platform"}>PLATFORM = {__PLATFORM__}</h1>
-            <div>
-                <img width={100} height={100} src={pngwing} alt="pngwing" />
-                <img width={100} height={100} src={glaza} alt="glaza" />
-                
-            </div>
-            <div>
-                <Art width={100} height={100}/>
-            </div>
-            <Link to="/about">About</Link>
-            <br/>      
-            <Link to="/shop">Shop</Link>
-            <h1 className={classes.value}>{count}</h1>
-            <button className={classes.button} onClick={increment}><span>Increment</span></button>
-            <About />
-        </div>
-        </>
-    );
+type authHandlerTypes = {
+  authHandler: void;
 };
 
+export default function App() {
+  const [openAuth, setOpenAuth] = useState(false);
+
+  const authHandler = () => {
+    setOpenAuth(!openAuth);
+  };
+
+  return openAuth ? (
+    <Auth authHandler={authHandler} />
+  ) : (
+    <MainPage authHandler={authHandler} />
+  );
+}

@@ -6,6 +6,7 @@ import { buildResolvers } from './buildResolvers';
 import { BuildOptions } from './types/types';
 
 
+
 export function buildWebpack(options: BuildOptions) : webpack.Configuration {
     const {mode, paths} = options;
     const isDev = mode === 'development';
@@ -20,6 +21,7 @@ export function buildWebpack(options: BuildOptions) : webpack.Configuration {
     plugins: buildPlugins(options),
     module: {
         rules: buildLoaders(options)
+        
     },
     resolve: buildResolvers(options),
     devtool: isDev ? 'eval-cheap-module-source-map' : 'source-map',
