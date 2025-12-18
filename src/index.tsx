@@ -4,6 +4,7 @@ import { StrictMode } from "react";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+import { store } from '../src/store/store'
 
 const root = document.getElementById("root");
 if (!root) {
@@ -38,11 +39,11 @@ const theme = createTheme({
 const container = createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      {/* <Provider store={store}> */}
+      <Provider store={store}>
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
-      {/* </Provider> */}
+      </Provider>
     </BrowserRouter>
   </StrictMode>
 );
