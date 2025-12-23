@@ -1,15 +1,10 @@
 import { createRoot } from "react-dom/client";
 import App from "./components/App";
 import { StrictMode } from "react";
-import { createTheme, ThemeProvider } from "@mui/material";
+import {  ThemeProvider, createTheme  } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from '../src/store/store'
-
-const root = document.getElementById("root");
-if (!root) {
-  throw new Error("Failed to find the root element");
-}
+import { store } from './store/store'
 
 const theme = createTheme({
   palette: {
@@ -36,7 +31,10 @@ const theme = createTheme({
   },
 });
 
-const container = createRoot(document.getElementById("root")).render(
+
+const root = createRoot(document.getElementById("root"));
+
+root.render(
   <StrictMode>
     <BrowserRouter>
       <Provider store={store}>

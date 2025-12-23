@@ -10,8 +10,17 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useGetProductsQuery } from "./ProductsApi";
 import { useState } from "react";
 
-export default function ProductCard() {
-  const [liked, setLiked] = useState<number[]>([]);
+type Product = {
+  id: string;
+  category: string;
+	thumbnail: string;
+	title: string;
+	price: number;
+	description: string;
+};
+
+export default function ProductsBeauty() {
+  const [liked, setLiked] = useState<string[]>([]);
   const { data, isLoading, error } = useGetProductsQuery();
 
   if (isLoading) return <p>Loading...</p>;
@@ -23,11 +32,10 @@ export default function ProductCard() {
         justifyContent: "center",
         flexWrap: "wrap",
         gap: 2,
-        p: 1,
-        padding: "30px",
+        p: 2,
       }}
     >
-      {data.products.map((p: any) => (
+      {data.products.filter((e: Product) => e.category === 'beauty').map((p: Product) => (
         <Card
           key={p.id}
           sx={{

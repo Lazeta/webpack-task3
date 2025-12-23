@@ -13,11 +13,8 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-interface authHandlerProps {
-  authHandler: () => void;
-}
 
-function Auth({ authHandler }: authHandlerProps) {
+function AuthPage() {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
@@ -98,7 +95,6 @@ function Auth({ authHandler }: authHandlerProps) {
           </FormControl>
         </Box>
         <Button
-          onClick={authHandler}
           variant="contained"
           sx={{ bgcolor: "green" }}
         >
@@ -109,4 +105,4 @@ function Auth({ authHandler }: authHandlerProps) {
   );
 }
 
-export default Auth;
+export default AuthPage;

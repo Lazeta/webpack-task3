@@ -6,8 +6,15 @@ export const api = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({ baseUrl: URL }),
   endpoints: (builder) => ({
-    getProducts: builder.query<any, void>({
-      query: () => "products",
+    getProducts: builder.query<any, void>({ // CHANGE ANY 
+      query: () => "/products",
+    }),
+    addProduct: builder.mutation<any, void>({ // CHANGE ANY TOO
+      query: (data) => ({
+        method: 'POST',
+        url: "/AddProduct",
+        body: data
+      }) 
     }),
   }),
 });

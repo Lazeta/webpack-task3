@@ -1,3 +1,3 @@
 import { lazy } from "react";
 
-export const LazyAuth = lazy(() => import("./Auth"));
+export const LazyAuth = lazy(() => import("./AuthPage"));

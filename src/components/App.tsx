@@ -1,29 +1,36 @@
-import { useState } from "react";
 import "./App.module.scss";
-import Auth from "@/pages/authentication/Auth";
-import MainPage from "@/pages/mainPage/MainPage";
+import AuthPage from "@/pages/authentication/AuthPage";
+import CartPage from "@/pages/cart/CartPage";
+import { Route, Routes } from "react-router-dom";
 import ProductCardPage from "@/pages/productsCard/ProductCardPage";
-
-type authHandlerTypes = {
-  authHandler: void;
-};
-
-import { useEffect } from "react";
-
-const URL = `https://dummyjson.com/products`
-
+import ProductCardDetails from "@/pages/productsCard/ProductCardDetails";
+import Layout from "@/pages/layout/Layout";
+import MainPage from "@/pages/mainPage/MainPage";
+import ProductsBeauty from "@/pages/productsCard/ProductsBeauty";
+import ProductsFragrances from "@/pages/productsCard/ProductsFragrances";
+import ProductsFurniture from "@/pages/productsCard/ProductsFurniture";
+import ProductsGroceries from "@/pages/productsCard/ProductsGroceries";
 
 export default function App() {
-  const [openAuth, setOpenAuth] = useState(false);
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<MainPage />} />
 
-  const authHandler = () => {
-    setOpenAuth(!openAuth);
-  };
+        <Route path="products">
+          <Route index element={<ProductCardPage />} />
+          <Route path="beauty" element={<ProductsBeauty />} />
+          <Route path="fragrances" element={<ProductsFragrances />} />
+          <Route path="furniture" element={<ProductsFurniture />} />
+          <Route path="groceries" element={<ProductsGroceries />} />
 
-  return openAuth ? (
-    <Auth authHandler={authHandler} />
-  ) : (
-    <MainPage authHandler={authHandler} />
+          <Route path=":id" element={<ProductCardDetails />} />
+        </Route>
+
+        <Route path="cart" element={<CartPage />} />
+      </Route>
+
+      <Route path="auth" element={<AuthPage />} />
+    </Routes>
   );
-
 }
