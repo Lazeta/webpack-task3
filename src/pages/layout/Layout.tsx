@@ -96,7 +96,14 @@ function Layout() {
             </Typography>
             <Button
               color="inherit"
-              sx={{ display: "flex", flexDirection: "column" }}
+              component={Link}
+              to={"/auth"}
+              sx={{
+                color: "inherit",
+                textDecoration: "none",
+                display: "flex",
+                flexDirection: "column",
+              }}
             >
               <span className="material-icons-outlined">
                 <svg

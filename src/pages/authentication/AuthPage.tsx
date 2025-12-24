@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -12,10 +11,18 @@ import FormControl from "@mui/material/FormControl";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
+import { useLoginMutation } from "./AuthApi";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "@/hooks/redux.hook";
+import { setCredentials } from "@/store/auth";
 
 function AuthPage() {
+  const [login, { isLoading, error }] = useLoginMutation();
+  const [userLogin, setUserLogin] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -26,6 +33,29 @@ function AuthPage() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const result = await login({ userName: userLogin, password }).unwrap();
+      localStorage.setItem("token", result.token);
+      navigate("/");
+      dispatch(
+        setCredentials({
+          user: {
+            id: result.id,
+            username: result.username,
+            email: result.email,
+            firstName: result.firstName,
+            lastName: result.lastName,
+          },
+          token: result.token,
+        })
+      );
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -54,15 +84,18 @@ function AuthPage() {
         }}
       >
         <Typography variant="h4" component="h1" align="center" gutterBottom>
-          Вход
+          Login
         </Typography>
         <Box
           component="form"
+          onSubmit={handleSubmit}
           sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         >
           <TextField
             id="outlined-multiline-flexible"
             label="Login"
+            onChange={(e) => setUserLogin(e.target.value)}
+            required
             multiline
             maxRows={4}
           />
@@ -73,6 +106,8 @@ function AuthPage() {
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
+              onChange={(e) => setPassword(e.target.value)}
+              required
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -95,12 +130,26 @@ function AuthPage() {
           </FormControl>
         </Box>
         <Button
+          type="submit"
+          disabled={isLoading}
+          onClick={handleSubmit}
+          sx={{
+            color: "inherit",
+            textDecoration: "none",
+            display: "flex",
+            flexDirection: "column",
+            bgcolor: "green",
+          }}
           variant="contained"
-          sx={{ bgcolor: "green" }}
         >
-          Войти
+          Sign in
         </Button>
       </Paper>
+      {error && (
+        <Typography color="error" variant="body2">
+          Invalid login or password
+        </Typography>
+      )}
     </Box>
   );
 }
