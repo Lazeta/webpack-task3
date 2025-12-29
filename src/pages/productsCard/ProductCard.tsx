@@ -9,10 +9,12 @@ import CardActions from "@mui/material/CardActions";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useGetProductsQuery } from "./ProductsApi";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductCard() {
   const [liked, setLiked] = useState<number[]>([]);
   const { data, isLoading, error } = useGetProductsQuery();
+  const navigate = useNavigate();
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading data</p>;
@@ -112,7 +114,7 @@ export default function ProductCard() {
                 }}
               />
             </IconButton>
-            <Button size="small">Learn More</Button>
+            <Button size="small" onClick={() => navigate(`/products/${p.id}`)}>Learn More</Button>
           </CardActions>
         </Card>
       ))}

@@ -9,6 +9,9 @@ export const api = createApi({
     getProducts: builder.query<any, void>({ // CHANGE ANY 
       query: () => "/products",
     }),
+    getProductById: builder.query<any, string | number>({
+      query: (id) => `/products/${id}`,
+    }),
     addProduct: builder.mutation<any, void>({ // CHANGE ANY TOO
       query: (data) => ({
         method: 'POST',
@@ -19,4 +22,4 @@ export const api = createApi({
   }),
 });
 
-export const { useGetProductsQuery } = api;
+export const { useGetProductsQuery, useGetProductByIdQuery } = api;
