@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
+import Badge, { BadgeProps } from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { styled, useTheme } from "@mui/material/styles";
@@ -14,6 +15,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./Layout.scss";
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
@@ -44,6 +46,15 @@ const AppBar = styled(MuiAppBar, {
       },
     },
   ],
+}));
+
+const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    right: -3,
+    top: 13,
+    border: `2px solid ${(theme.vars ?? theme).palette.background.paper}`,
+    padding: '0 4px',
+  },
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -90,10 +101,30 @@ function Layout() {
               variant="h6"
               component={Link}
               to="/"
-              sx={{ color: "inherit", textDecoration: "none", flexGrow: 1 }}
+              sx={{
+                color: "inherit",
+                textDecoration: "none",
+                flexGrow: 1,
+              }}
             >
               Supershop
             </Typography>
+            <Button
+              color="inherit"
+              component={Link}
+              to={"/cart"}
+              sx={{
+                color: "inherit",
+                textDecoration: "none",
+                display: "flex",
+                flexDirection: "column",
+                height: "70px",
+              }}
+            >
+                <StyledBadge badgeContent={4} color="secondary">
+                  <ShoppingCartIcon sx={{ mr: 0.5 }} />
+                </StyledBadge>
+            </Button>
             <Button
               color="inherit"
               component={Link}

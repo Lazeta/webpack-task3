@@ -1,6 +1,11 @@
+import { Typography } from "@mui/material";
+import Container from "@mui/material/Container";
+
 export function CartPage() {
     return (
-        <div>Hello world</div>
+        <Container>
+            <Typography>Your cart</Typography>
+        </Container>
     )
 }
 

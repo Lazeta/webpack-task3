@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import Container from "@mui/material/Container";
-import NavigationIcon from "@mui/icons-material/Navigation";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "./ProductsApi";
 
@@ -22,7 +22,7 @@ export function ProductCardDetails() {
       <CardMedia
         sx={{ height: 400, objectFit: "contain" }}
         component="img"
-        image={data.thumbnail}
+        image={data.images}
         title={data.title}
       />
       <Box sx={{ p: 2 }}>
@@ -38,7 +38,7 @@ export function ProductCardDetails() {
       </Box>
       <Box sx={{ p: 2 }}>
         <Fab variant="extended" size="medium" color="primary">
-          <NavigationIcon sx={{ mr: 1 }} />
+          <AddShoppingCartIcon sx={{ mr: 1 }} />
           Add to cart
         </Fab>
       </Box>
