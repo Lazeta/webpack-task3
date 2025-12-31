@@ -11,6 +11,7 @@ import FormControl from "@mui/material/FormControl";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useLoginMutation } from "./AuthApi";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/hooks/redux.hook";
@@ -23,24 +24,22 @@ function AuthPage() {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
-  const handleMouseUpPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
+  const handleMouseDownPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await login({ userName: userLogin, password }).unwrap();
-      localStorage.setItem("token", result.token);
-      navigate("/");
+      const result = await login({
+        username: userLogin,
+        password,
+      }).unwrap();
+
+      localStorage.setItem("token", result.accessToken);
+
       dispatch(
         setCredentials({
           user: {
@@ -50,11 +49,13 @@ function AuthPage() {
             firstName: result.firstName,
             lastName: result.lastName,
           },
-          token: result.token,
+          token: result.accessToken,
         })
       );
+
+      navigate("/");
     } catch (err) {
-      console.error(err);
+      console.error("Login failed:", err);
     }
   };
 
@@ -67,7 +68,7 @@ function AuthPage() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundImage: `url('assets//backgroundLeaves.svg')`,
+        backgroundImage: `url("assets/backgroundLeaves.svg")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -81,44 +82,44 @@ function AuthPage() {
           display: "flex",
           flexDirection: "column",
           gap: 2,
+          minWidth: 320,
         }}
       >
         <Typography variant="h4" component="h1" align="center" gutterBottom>
           Login
         </Typography>
+
         <Box
           component="form"
           onSubmit={handleSubmit}
           sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         >
           <TextField
-            id="outlined-multiline-flexible"
             label="Login"
+            value={userLogin}
             onChange={(e) => setUserLogin(e.target.value)}
             required
-            multiline
-            maxRows={4}
+            fullWidth
+            disabled={isLoading}
           />
-          <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
+
+          <FormControl variant="outlined" fullWidth>
+            <InputLabel htmlFor="password-input">Password</InputLabel>
             <OutlinedInput
-              id="outlined-adornment-password"
+              id="password-input"
               type={showPassword ? "text" : "password"}
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={isLoading}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label={
-                      showPassword
-                        ? "hide the password"
-                        : "display the password"
+                      showPassword ? "hide password" : "show password"
                     }
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
-                    onMouseUp={handleMouseUpPassword}
                     edge="end"
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -128,28 +129,26 @@ function AuthPage() {
               label="Password"
             />
           </FormControl>
+          {error && (
+            <Typography color="error" variant="body2" align="center">
+              Invalid login or password
+            </Typography>
+          )}
+
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={isLoading}
+            sx={{ bgcolor: "green", "&:hover": { bgcolor: "darkgreen" } }}
+          >
+            {isLoading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Sign in"
+            )}
+          </Button>
         </Box>
-        <Button
-          type="submit"
-          disabled={isLoading}
-          onClick={handleSubmit}
-          sx={{
-            color: "inherit",
-            textDecoration: "none",
-            display: "flex",
-            flexDirection: "column",
-            bgcolor: "green",
-          }}
-          variant="contained"
-        >
-          Sign in
-        </Button>
       </Paper>
-      {error && (
-        <Typography color="error" variant="body2">
-          Invalid login or password
-        </Typography>
-      )}
     </Box>
   );
 }

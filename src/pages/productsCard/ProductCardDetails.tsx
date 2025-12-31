@@ -8,7 +8,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "./ProductsApi";
 
-export function ProductCardDetails() {
+function ProductCardDetails() {
   const { id } = useParams();
   const { data, isLoading } = useGetProductByIdQuery(id);
 
