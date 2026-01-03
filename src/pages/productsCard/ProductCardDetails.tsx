@@ -14,9 +14,6 @@ function ProductCardDetails() {
   const { data, isLoading } = useGetProductByIdQuery(id);
   const { addItem, items } = useBasket();
 
-  const isInBasket = (id: number) =>
-    items.some((item: IBasketItem) => item.id === id);
-
   if (isLoading) return <p>Loading...</p>;
 
   return (
@@ -24,12 +21,19 @@ function ProductCardDetails() {
       <Typography gutterBottom variant="h5" component="div">
         {data.title}
       </Typography>
-      <CardMedia
-        sx={{ height: 400, objectFit: "contain" }}
-        component="img"
-        image={data.images}
-        title={data.title}
-      />
+      <Box
+        sx={{ display: "flex", flexDirection: "row", justifyContent: "center", pt: 4 }}
+      >
+        {data.images &&
+          data.images.map((img: string) => (
+            <CardMedia
+              sx={{ height: 400, objectFit: "contain" }}
+              component="img"
+              image={img}
+              title={data.title}
+            />
+          ))}
+      </Box>
       <Box sx={{ p: 2 }}>
         <Stack
           direction="row"

@@ -36,7 +36,7 @@ export default function ProductCard() {
         padding: "30px",
       }}
     >
-      {data.products.map((p: any) => (
+      {data.products.map((p: any) => (  // CHANGE ANY 
         <Card
           key={p.id}
           sx={{
@@ -51,6 +51,7 @@ export default function ProductCard() {
             component="img"
             image={p.thumbnail}
             title={p.title}
+            onClick={() => navigate(`/products/${p.id}`)}
           />
           <CardContent
             sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
