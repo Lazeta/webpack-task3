@@ -16,8 +16,8 @@ import { useBasket, type IBasketItem } from "@/context/BasketContext";
 export default function ProductCard() {
   const [liked, setLiked] = useState<number[]>([]);
   const { data, isLoading, error } = useGetProductsQuery();
-  const navigate = useNavigate();
   const { addItem, items } = useBasket();
+  const navigate = useNavigate();
 
   const isInBasket = (id: number) => items.some((item: IBasketItem) => item.id === id);
 
