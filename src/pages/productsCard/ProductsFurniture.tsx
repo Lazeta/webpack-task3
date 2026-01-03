@@ -141,7 +141,7 @@ export default function ProductsFurniture() {
                   </IconButton>
 
                   <IconButton
-                    aria-label="add to cart"
+                    aria-label="add to basket"
                     onClick={() =>
                       addItem({
                         id: p.id,

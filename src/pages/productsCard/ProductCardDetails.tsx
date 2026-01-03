@@ -7,10 +7,15 @@ import Container from "@mui/material/Container";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "./ProductsApi";
+import { useBasket, type IBasketItem } from "@/context/BasketContext";
 
 function ProductCardDetails() {
   const { id } = useParams();
   const { data, isLoading } = useGetProductByIdQuery(id);
+  const { addItem, items } = useBasket();
+
+  const isInBasket = (id: number) =>
+    items.some((item: IBasketItem) => item.id === id);
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -37,7 +42,20 @@ function ProductCardDetails() {
         <Typography variant="body1">{data.description}</Typography>
       </Box>
       <Box sx={{ p: 2 }}>
-        <Fab variant="extended" size="medium" color="primary">
+        <Fab
+          variant="extended"
+          size="medium"
+          color="primary"
+          aria-label="add to basket"
+          onClick={() =>
+            addItem({
+              id: data.id,
+              title: data.title,
+              price: data.price,
+              thumbnail: data.thumbnail,
+            })
+          }
+        >
           <AddShoppingCartIcon sx={{ mr: 1 }} />
           Add to Basket
         </Fab>

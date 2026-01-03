@@ -142,7 +142,7 @@ export default function ProductsBeauty() {
 
                   {/* Добавить в корзину */}
                   <IconButton
-                    aria-label="add to cart"
+                    aria-label="add to basket"
                     onClick={() =>
                       addItem({
                         id: p.id,
