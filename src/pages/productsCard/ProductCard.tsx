@@ -1,3 +1,4 @@
+// ProductCard.tsx
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -18,6 +19,9 @@ export default function ProductCard() {
   const { data, isLoading, error } = useGetProductsQuery();
   const { addItem, items } = useBasket();
   const navigate = useNavigate();
+  const { addItem, items } = useBasket();
+
+  const isInBasket = (id: number) => items.some((item: IBasketItem) => item.id === id);
 
   const isInBasket = (id: number) => items.some((item: IBasketItem) => item.id === id);
 
